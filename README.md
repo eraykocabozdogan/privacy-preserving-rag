@@ -6,13 +6,27 @@ Course: CENG543 - Information Retrieval Systems
 
 ## Overview
 
-This project investigates how different text anonymization strategies affect the performance of Retrieval-Augmented Generation (RAG) systems. While protecting personally identifiable information (PII) is crucial, anonymization can disrupt semantic structure and harm downstream model performance. We evaluate three anonymization approaches and their impact on retrieval accuracy and answer generation quality.
+This project investigates how different text anonymization strategies affect the performance of Retrieval-Augmented Generation (RAG) systems. While protecting personally identifiable information (PII) is crucial, anonymization can disrupt semantic structure and harm downstream model performance. We evaluate three anonymization approaches against a no-anonymization baseline and measure their impact on retrieval accuracy and answer generation quality.
 
 The research question is: How do different anonymization strategies affect the trade-off between privacy protection and utility preservation in RAG pipelines?
 
+### Headline results (Dense FAISS retrieval, 250 PII-rich SQuAD samples)
+
+| Strategy | Retrieval Recall | Exact Match | F1 | Faithfulness |
+|---|---|---|---|---|
+| Baseline (no anonymization) | 29.6 | 50.8 | 55.9 | 44.0 |
+| Placeholder (`[PERSON]`) | 9.6 | 15.2 | 18.8 | 65.2 |
+| Faker (synthetic names) | 9.6 | 13.6 | 17.3 | 47.6 |
+| Context-Aware (BERT MLM) | 12.0 | 16.0 | 20.1 | 59.2 |
+
+Naive anonymization cuts answer accuracy by about 70% on PII-rich questions. This
+gap is what privacy layers for LLM applications have to close. Full results for BM25,
+exact dense and FAISS retrieval are in [`final_analysis_results.csv`](final_analysis_results.csv),
+and figures are in `fig1_results_chart.pdf` and `fig2_architecture.pdf`.
+
 ## Anonymization Strategies
 
-We compare three approaches for anonymizing sensitive entities (Person, Organization, Location):
+We compare three approaches for anonymizing sensitive entities (Person, Organization, Location) against a baseline:
 
 1. **Baseline**: No anonymization (reference).
 2. **Placeholder**: Replace entities with generic tags (e.g., `[PERSON]`, `[ORG]`).
@@ -102,7 +116,7 @@ This generates comprehensive evaluation metrics and comparison tables.
 
 ## Key Findings
 
-Preliminary results show that:
+Results show that:
 *   **Dataset Impact**: About 43% of the dataset did not contain PII. Filtering for PII-rich rows reveals a much sharper performance drop for anonymization methods.
 *   **Performance Drop**: When tested on PII-rich data, Placeholder anonymization causes severe retrieval failures (EM drops from ~50% to **15.2%**).
 *   **Comparison**: **Faker** performs even worse than Placeholder in these strict conditions (**14.0% EM**). Context-Aware strategies offer slight improvements (16.0% EM) but still suffer significantly compared to Baseline.
@@ -115,4 +129,4 @@ Preliminary results show that:
 - `analyze_final.py`: < 1 minute
 
 ## Plotting
-- To reproduce the figures in the paper, run python generate_plots.py.
+To reproduce the figures in the paper, run `python generate_plots.py`.
