@@ -1,8 +1,7 @@
 # Privacy-Preserving RAG Systems: Evaluating Anonymization Strategies
 
-Author: Eray Kocabozdoğan  
-Student ID: 280201055  
-Course: CENG543 - Information Retrieval Systems
+> Research project by Eray Kocabozdoğan, originally for CENG543 Information Retrieval
+> (IZTECH, Fall 2025).
 
 ## Overview
 
@@ -53,8 +52,8 @@ Prerequisites: Python 3.8 or higher, 8GB RAM recommended.
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/eraykocabozdogan/CENG543_Project.git
-cd CENG543_Project
+git clone https://github.com/eraykocabozdogan/privacy-preserving-rag.git
+cd privacy-preserving-rag
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
